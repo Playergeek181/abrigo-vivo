@@ -11,9 +11,9 @@
 </p>
 
 <p align="center">
-  <a href="https://YOUR-USER.github.io/abrigo-vivo/"><b>Live site</b></a> ·
-  <a href="https://YOUR-USER.github.io/abrigo-vivo/site/abrigo-vivo.html">Project page</a> ·
-  <a href="https://YOUR-USER.github.io/abrigo-vivo/3d/">3D animation</a>
+  <a href="https://playergeek181.github.io/abrigo-vivo/"><b>Live site</b></a> ·
+  <a href="https://playergeek181.github.io/abrigo-vivo/site/abrigo-vivo.html">Project page</a> ·
+  <a href="https://playergeek181.github.io/abrigo-vivo/3d/">3D animation</a>
 </p>
 
 ---
@@ -31,7 +31,7 @@
 ## Quick start (Linux / macOS)
 
 ```bash
-git clone https://github.com/YOUR-USER/abrigo-vivo.git
+git clone https://github.com/Playergeek181/abrigo-vivo.git
 cd abrigo-vivo
 chmod +x install.sh
 ./install.sh --run
@@ -67,11 +67,11 @@ and open http://localhost:8123.
    git init -b main
    git add .
    git commit -m "Abrigo Vivo site, 3D animation and logo"
-   git remote add origin https://github.com/YOUR-USER/abrigo-vivo.git
+   git remote add origin https://github.com/Playergeek181/abrigo-vivo.git
    git push -u origin main
    ```
 3. On GitHub: **Settings → Pages → Build and deployment**, set *Source: Deploy from a branch*, *Branch: `main`*, folder *`/ (root)`*, and click **Save**.
-4. After a minute or two the site is live at `https://YOUR-USER.github.io/abrigo-vivo/`. Replace `YOUR-USER` in this README with your GitHub username.
+4. After a minute or two the site is live at `https://playergeek181.github.io/abrigo-vivo/`.
 
 The empty `.nojekyll` file tells GitHub to serve the files as they are. `.gitignore` keeps the WhatsApp voice note and the local `.impeccable/` reviews out of the repository.
 
