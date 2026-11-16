@@ -615,7 +615,8 @@ new ResizeObserver(resize).observe(stage);
 setExplode(0);setInside(true);resize();goTo('geral',true);
 let last=performance.now();
 renderer.setAnimationLoop(now=>{
-  const dt=Math.min(.05,(now-last)/1000);last=now;
+  // o primeiro timestamp do quadro pode ser anterior a `last`: nunca deixar dt negativo
+  const dt=clamp((now-last)/1000,0,.05);last=now;
   if(camAnim){
     camAnim.t=Math.min(1,camAnim.t+dt/1.2);const e=camAnim.t*camAnim.t*(3-2*camAnim.t);
     camera.position.lerpVectors(camAnim.p0,camAnim.p1,e);controls.target.lerpVectors(camAnim.t0,camAnim.t1,e);
