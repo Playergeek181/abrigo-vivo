@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="t">
+  <title id="t">Abrigo Vivo</title>
+  <rect width="128" height="128" rx="28" fill="#0b1513"/>
+  <!-- casinha -->
+  <path d="M64 18 L104 46 V108 H24 V46 Z" fill="#13201d" stroke="#efe9cf" stroke-width="6" stroke-linejoin="round"/>
+  <!-- barreira infravermelha na entrada -->
+  <line x1="34" y1="96" x2="94" y2="96" stroke="#ff5a4a" stroke-width="4" stroke-linecap="round" stroke-dasharray="7 6"/>
+  <!-- morcego -->
+  <path transform="translate(64 66) scale(1.2)" fill="#efe9cf" d="M0 -4 L3 -10 L4 -4 Q12 -11 27 -8 Q22 -4 23 1 Q17 -1 14 3 Q10 0 6 4 Q3 2 0 7 Q-3 2 -6 4 Q-10 0 -14 3 Q-17 -1 -23 1 Q-22 -4 -27 -8 Q-12 -11 -4 -4 L-3 -10 Z"/>
+  <!-- essência -->
+  <path d="M110 40 q-6 -7 0 -14 q6 -7 0 -14" fill="none" stroke="#e597bd" stroke-width="4" stroke-linecap="round"/>
+</svg>

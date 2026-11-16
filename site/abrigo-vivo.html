@@ -1,0 +1,669 @@
+<title>Abrigo Vivo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: uma noite das 18h às 6h. Cada seção tem a hora num trilho à esquerda; o fundo vai do crepúsculo à madrugada e ao amanhecer.
+   Mundo único e noturno: a cor de destaque é sempre a essência; o vermelho é sempre o infravermelho. */
+:root{
+  color-scheme:dark;
+  --bg:#0b1513; --nav:#0d1816; --surface:#13201d; --ink:#e7ece4; --muted:#a9b5ad; --line:#33443f;
+  --dusk:#2a2b4d; --dawn:#4b3443;
+  --accent:#e597bd; --accent-soft:#3b2431; --leaf:#6fa784; --moon:#efe9cf;
+  --ir:#ff5a4a; --ir-bg:#170c0b; --ir-surface:#221312; --ir-ink:#f3e3df; --ir-muted:#c9a9a3; --ir-line:#4a2a27;
+  --sky:#142334; --wood:#b4825a; --wood-dark:#86603f; --cavity:#24190f; --box:#3a4440; --chip:#3f9a58;
+  --battery:#d0a63a; --cam:#050505; --lens:#7ea2c8; --bat:#07080b; --bat-rim:#8796ad;
+  --f-display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --f-body:'Atkinson Hyperlegible',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+  --rail:96px;
+}
+*{box-sizing:border-box}
+html{scrollbar-color:var(--line) var(--bg);scroll-padding-top:64px}
+body{
+  background-color:var(--bg);
+  background-image:linear-gradient(180deg,var(--dusk) 0%,var(--bg) 22%,var(--bg) 78%,var(--dawn) 100%);
+  color:var(--ink);font:400 17px/1.6 var(--f-body);caret-color:var(--accent);
+}
+::selection{background:var(--accent);color:var(--bg)}
+a{color:var(--accent);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(52px,10vw,96px);font-weight:800;letter-spacing:-.035em}
+h2{font-size:clamp(28px,4.2vw,42px);font-weight:700;letter-spacing:-.015em}
+h3{font-size:20px;font-weight:700}
+p{margin:0;max-width:65ch}
+.muted{color:var(--muted)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* navegação */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--nav)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--nav);border-bottom:1px solid var(--line)}
+.nav ol{list-style:none;margin:0 auto;padding-block:0;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;max-width:1080px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.nav a{display:flex;gap:8px;align-items:baseline;white-space:nowrap;padding:14px 10px;color:var(--ink);text-decoration:none;font-size:15px;border-radius:6px}
+.nav a:hover{background:var(--surface)}
+.nav a span{font:600 12px var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* trilho de horas */
+.band{padding-block:64px}
+.row{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:28px}
+.rail{border-right:1px solid var(--line);padding-right:16px;text-align:right;position:relative}
+.rail time{display:block;font:600 15px/1.3 var(--f-mono);color:var(--moon);font-variant-numeric:tabular-nums;padding-top:8px}
+.rail small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.rail::after{content:"";position:absolute;right:-5px;top:14px;width:9px;height:9px;border-radius:50%;background:var(--moon)}
+.body{display:flex;flex-direction:column;gap:18px;min-width:0}
+.body > h2 + p{margin-top:-4px}
+
+/* hero */
+.hero{padding-block:56px 40px}
+.lead{font-size:clamp(20px,2.4vw,24px);line-height:1.45;max-width:34ch}
+.hero .where{color:var(--muted)}
+.illus{margin:16px 0 0;border-radius:20px;overflow:hidden;background:var(--sky)}
+.illus svg{display:block;width:100%;height:auto}
+.legend{display:none;margin:14px 0 0;padding-left:28px;gap:4px;font-size:15px}
+.legend li::marker{font-weight:700;color:var(--moon)}
+.figcap{font-size:14px;color:var(--muted);margin-top:10px}
+
+/* morcegos */
+.guilds{display:grid;gap:0;margin:8px 0 0;border-top:1px solid var(--line)}
+.guilds > div{display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;padding:16px 0;border-bottom:1px solid var(--line)}
+.guilds dt{font:700 20px var(--f-display)}
+.guilds dt span{display:block;font:400 13px var(--f-body);color:var(--muted);margin-top:4px}
+.guilds dd{margin:0;max-width:60ch}
+.guilds .off dt,.guilds .off dd{color:var(--muted)}
+
+.todo{display:inline;padding:1px 6px;border:1px dashed var(--accent);border-radius:4px;color:var(--accent);font-size:.9em;white-space:normal}
+
+/* proposta */
+.trio{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.trio li{display:flex;flex-direction:column;gap:6px;padding-top:14px;border-top:2px solid var(--ink)}
+.trio li:nth-child(2){border-top-color:var(--accent)}
+.trio strong{font:700 19px var(--f-display)}
+.trio p{font-size:16px;color:var(--muted)}
+.question{margin-top:12px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.question h3{font-size:24px}
+
+/* passos */
+.steps,.next{list-style:none;margin:4px 0 0;padding:0;counter-reset:s;display:grid}
+.steps li,.next li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;padding:16px 0;border-bottom:1px solid var(--line);counter-increment:s}
+.steps li::before,.next li::before{content:counter(s);font:800 28px/1 var(--f-display);color:var(--moon)}
+.steps strong,.next strong{display:block;font-family:var(--f-display);font-size:19px;margin-bottom:2px}
+.steps p,.next p{color:var(--muted);font-size:16px}
+.term{font-style:italic}
+
+/* tabelas */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+caption{text-align:left;padding:12px 16px;font-weight:700;border-bottom:1px solid var(--line)}
+th,td{text-align:left;padding:11px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 12px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+td.part{font-weight:700;min-width:12ch}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:14px;white-space:nowrap}
+
+/* faixa infravermelha */
+.ir{background:var(--ir-bg);color:var(--ir-ink);border-block:1px solid var(--ir-line)}
+.ir .rail{border-color:var(--ir-line)}
+.ir .rail time{color:var(--ir)}
+.ir .rail::after{background:var(--ir)}
+.ir .muted,.ir .rail small{color:var(--ir-muted)}
+.ir .tbl{background:var(--ir-surface);border-color:var(--ir-line)}
+.ir th{color:var(--ir-muted)}
+.ir th,.ir td,.ir caption{border-color:var(--ir-line)}
+.sample{align-self:flex-start;font:600 12px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ir);border:1px dashed var(--ir);padding:5px 9px;border-radius:6px}
+.tally{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;font-size:15px;color:var(--ir-muted)}
+.tally b{font:700 34px/1 var(--f-display);color:var(--ir-ink);font-variant-numeric:tabular-nums;margin-right:4px}
+.tally .op{font:700 26px var(--f-display);color:var(--ir)}
+.chart{margin-top:8px}
+.chart .notes,.chart .bars,.chart .hours{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px}
+.chart .notes{font-size:13px;color:var(--ir-muted);margin-bottom:6px}
+.chart .notes span:first-child{grid-column:1 / span 4}
+.chart .notes span:last-child{grid-column:9 / span 4;text-align:right}
+.chart .bars{height:150px;align-items:end;border-bottom:1px solid var(--ir-line)}
+.chart .bar{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;gap:4px}
+.chart .bar b{font:600 12px var(--f-mono);color:var(--ir-ink)}
+.chart .bar i{display:block;width:100%;background:var(--ir);border-radius:3px 3px 0 0;min-height:2px}
+.chart .bar.low i{opacity:.55}
+.chart .hours{font:400 12px var(--f-mono);color:var(--ir-muted);text-align:center;margin-top:6px}
+.dir{display:inline-block;font:600 12px var(--f-mono);padding:3px 8px;border-radius:999px}
+.dir.in{background:var(--ir);color:var(--ir-bg)}
+.dir.out{border:1px solid var(--ir-muted);color:var(--ir-ink)}
+
+/* limites */
+/* energia */
+.tbl tfoot td{font-weight:700;border-top:1px solid var(--line);border-bottom:0}
+.tbl tfoot tr + tr td{color:var(--muted);font-weight:400}
+.share{display:flex;height:14px;border-radius:999px;overflow:hidden;background:var(--line);margin-top:4px}
+.share i{display:block}
+.share .s-pi{background:var(--chip)}
+.share .s-ir{background:var(--ir)}
+.share .s-rest{background:var(--muted)}
+.share-key{display:flex;flex-wrap:wrap;gap:6px 20px;margin:8px 0 0;padding:0;list-style:none;font-size:15px;color:var(--muted)}
+.share-key li{display:flex;align-items:center;gap:8px}
+.share-key li::before{content:"";width:10px;height:10px;border-radius:2px;background:var(--k)}
+.share-key b{color:var(--ink);font-family:var(--f-mono);font-weight:600;font-variant-numeric:tabular-nums}
+.calc{list-style:none;margin:4px 0 0;padding:0;display:grid}
+.calc li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 20px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
+.calc span{color:var(--muted);font-size:16px}
+.calc code{font:400 15px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+.calc code b{font-weight:600;color:var(--moon)}
+.result{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.result h3{font-size:24px}
+.result .big{font:800 clamp(34px,5vw,48px)/1 var(--f-display);color:var(--moon);font-variant-numeric:tabular-nums}
+.result .big small{font:400 17px var(--f-body);color:var(--muted);margin-left:8px}
+
+.care{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 40px;margin-top:4px}
+.care div{display:flex;flex-direction:column;gap:6px;padding-top:14px;border-top:1px solid var(--line)}
+.care p{font-size:16px;color:var(--muted)}
+
+/* final */
+.ask{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 40px;margin-top:8px}
+.ask > div{display:flex;flex-direction:column;gap:10px}
+.who{display:grid;gap:10px;margin:0}
+.who div{display:grid;grid-template-columns:150px minmax(0,1fr);gap:12px}
+.who dt{color:var(--muted)}
+.who dd{margin:0}
+.refs{margin:0;padding-left:22px;display:grid;gap:8px;font-size:16px}
+
+footer{padding-block:36px;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+
+@media (max-width:820px){
+  :root{--rail:58px}
+  .row{gap:16px}
+  .rail{padding-right:10px}
+  .rail time{font-size:13px}
+  .rail small{display:none}
+  .band{padding-block:48px}
+  .trio,.care,.ask{grid-template-columns:minmax(0,1fr)}
+  .guilds > div{grid-template-columns:minmax(0,1fr);gap:6px}
+  .who div{grid-template-columns:minmax(0,1fr);gap:0}
+  .calc li{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:700px){
+  .illus svg{width:179.2%;max-width:none;margin-left:-37.5%}
+  .illus .av-labels{display:none}
+  .illus .av-num{display:inline}
+  .legend{display:grid}
+  .chart .bar b{font-size:10px}
+  .chart .hours{font-size:10px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .hero .body > *{animation:dusk 1s cubic-bezier(.16,1,.3,1) both}
+  .hero .body > :nth-child(2){animation-delay:.1s}
+  .hero .body > :nth-child(3){animation-delay:.2s}
+  @keyframes dusk{from{transform:translateY(12px);filter:blur(3px)}to{transform:none;filter:none}}
+}
+</style>
+
+<nav class="nav" aria-label="Seções">
+  <ol>
+    <li><a href="#abrigo"><span>18h</span>Abrigo</a></li>
+    <li><a href="#morcegos"><span>18h40</span>Morcegos</a></li>
+    <li><a href="#problema"><span>21h</span>Problema</a></li>
+    <li><a href="#pergunta"><span>23h</span>Pergunta</a></li>
+    <li><a href="#contagem"><span>0h</span>Contagem</a></li>
+    <li><a href="#energia"><span>2h</span>Energia</a></li>
+    <li><a href="#noite"><span>4h50</span>Uma noite</a></li>
+    <li><a href="#limites"><span>5h30</span>Limites</a></li>
+    <li><a href="#proximos"><span>6h</span>Próximos passos</a></li>
+  </ol>
+</nav>
+
+<main lang="pt-BR">
+
+<header class="hero" id="abrigo">
+  <div class="wrap row">
+    <div class="rail"><time>18:00</time><small>pôr do sol</small></div>
+    <div class="body">
+      <h1>Abrigo Vivo</h1>
+      <p class="lead">Um abrigo com o cheiro das plantas que os morcegos comem consegue trazê-los de volta para a mata em recuperação? É isso que queremos testar e medir, noite após noite.</p>
+      <p class="where">Projeto para áreas em recuperação perto da Mata de Santa Genebra, em Campinas (SP).</p>
+      <figure style="margin:0">
+        <div class="illus">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 640" role="img" aria-labelledby="av-t av-d">
+<title id="av-t">Abrigo Vivo em corte lateral</title>
+<desc id="av-d">Casinha-abrigo para morcegos presa a um poste, mostrada em corte. No topo, um compartimento vedado com a Raspberry Pi, a câmera NoIR e LEDs infravermelhos olhando para a fresta central. Embaixo, frestas de cerca de 2 cm com morcegos pendurados, uma barreira infravermelha dupla na entrada e a tábua de pouso. Na frente, um difusor de essência vegetal. Sobre o telhado, uma antena LoRa que envia um resumo da noite pelo rádio. No poste, a bateria numa caixa separada, longe dos morcegos. Não há painel solar: a mata é fechada e a bateria é trocada toda semana.</desc>
+<style>
+.av-sky{fill:var(--sky,#142334)}
+.av-moon{fill:var(--moon,#efe9cf)}
+.av-tree{fill:var(--leaf,#6fa784);opacity:.16}
+.av-wood{fill:var(--wood,#b4825a)}
+.av-woodd{fill:var(--wood-dark,#86603f)}
+.av-groove{stroke:var(--wood-dark,#86603f);stroke-width:2}
+.av-inside{fill:var(--cavity,#24190f)}
+.av-box{fill:var(--box,#3a4440)}
+.av-pi{fill:var(--chip,#3f9a58)}
+.av-batt{fill:var(--battery,#d0a63a)}
+.av-cam{fill:var(--cam,#050505)}
+.av-lens{fill:var(--lens,#7ea2c8)}
+.av-led{fill:var(--ir,#ff5a4a)}
+.av-cone{fill:var(--ir,#ff5a4a);opacity:.12}
+.av-bat{fill:var(--bat,#07080b);stroke:var(--bat-rim,#8796ad);stroke-width:1;stroke-linejoin:round}
+.av-ir{stroke:var(--ir,#ff5a4a);stroke-width:2.5;stroke-dasharray:6 5;fill:none}
+.av-lead{stroke:var(--muted,#a9b5ad);stroke-width:1.2;fill:none}
+.av-dot{fill:var(--muted,#a9b5ad)}
+.av-lbl{font:700 15px 'Atkinson Hyperlegible',system-ui,sans-serif;fill:var(--ink,#e7ece4)}
+.av-sub{font:400 13px 'Atkinson Hyperlegible',system-ui,sans-serif;fill:var(--muted,#a9b5ad)}
+.av-scent{stroke:var(--accent,#e597bd);stroke-width:2;fill:none;stroke-linecap:round}
+.av-vial{fill:var(--accent,#e597bd)}
+.av-cable{stroke:var(--ink,#e7ece4);stroke-width:1.5;fill:none;stroke-dasharray:2 4;opacity:.45}
+.av-ant{stroke:var(--ink,#e7ece4);stroke-width:3;stroke-linecap:round}
+.av-wave{stroke:var(--moon,#efe9cf);stroke-width:1.6;fill:none;stroke-linecap:round;opacity:.75}
+.av-num{display:none}
+.av-num circle{fill:var(--ink,#e7ece4)}
+.av-num text{font:700 15px 'Atkinson Hyperlegible',system-ui,sans-serif;fill:var(--sky,#142334);text-anchor:middle;dominant-baseline:central}
+</style>
+<defs>
+  <g id="av-hang">
+    <ellipse cx="0" cy="0" rx="7" ry="14"/>
+    <circle cx="0" cy="14" r="6"/>
+    <polygon points="-5,17 -4,24 -1,19"/>
+    <polygon points="5,17 4,24 1,19"/>
+    <rect x="-1" y="-19" width="2" height="6"/>
+  </g>
+  <path id="av-fly" d="M0 -4 L3 -10 L4 -4 Q12 -11 27 -8 Q22 -4 23 1 Q17 -1 14 3 Q10 0 6 4 Q3 2 0 7 Q-3 2 -6 4 Q-10 0 -14 3 Q-17 -1 -23 1 Q-22 -4 -27 -8 Q-12 -11 -4 -4 L-3 -10 Z"/>
+</defs>
+
+<rect class="av-sky" x="0" y="0" width="860" height="640" rx="20"/>
+<circle class="av-moon" cx="110" cy="88" r="34"/>
+<ellipse class="av-tree" cx="40" cy="610" rx="150" ry="95"/>
+<ellipse class="av-tree" cx="230" cy="640" rx="130" ry="55"/>
+<ellipse class="av-tree" cx="820" cy="620" rx="160" ry="80"/>
+
+<!-- poste e bateria -->
+<rect class="av-woodd" x="446" y="80" width="22" height="560"/>
+<rect class="av-box" x="468" y="538" width="50" height="38" rx="4"/>
+<rect class="av-batt" x="476" y="546" width="34" height="22" rx="3"/>
+<path class="av-cable" d="M478 538 C480 420 470 260 424 200"/>
+
+<!-- casinha em corte -->
+<polygon class="av-inside" points="316,170 428,140 428,432 316,432"/>
+<polygon class="av-box" points="316,170 428,140 428,214 316,214"/>
+<rect class="av-wood" x="428" y="126" width="16" height="394"/>
+<rect class="av-wood" x="300" y="164" width="16" height="268"/>
+<polygon class="av-woodd" points="282,158 468,108 472,124 286,174"/>
+<rect class="av-woodd" x="316" y="214" width="112" height="8"/>
+
+<!-- antena LoRa -->
+<line class="av-ant" x1="412" y1="122" x2="412" y2="74"/>
+<circle class="av-dot" cx="412" cy="72" r="3"/>
+<path class="av-wave" d="M402 62 q10 -9 20 0"/>
+<path class="av-wave" d="M396 54 q16 -14 32 0"/>
+
+<!-- eletrônica -->
+<rect class="av-pi" x="350" y="182" width="58" height="22" rx="2"/>
+<rect class="av-box" x="358" y="188" width="11" height="11"/>
+<rect class="av-box" x="376" y="190" width="22" height="4"/>
+<polygon class="av-cone" points="373,226 336,330 410,330"/>
+<rect class="av-cam" x="363" y="206" width="20" height="12" rx="2"/>
+<circle class="av-lens" cx="373" cy="224" r="5"/>
+<circle class="av-led" cx="346" cy="220" r="3.2"/>
+<circle class="av-led" cx="400" cy="220" r="3.2"/>
+
+<!-- frestas -->
+<rect class="av-woodd" x="350" y="236" width="8" height="176"/>
+<rect class="av-woodd" x="388" y="230" width="8" height="182"/>
+<g class="av-bat">
+  <use href="#av-hang" transform="translate(333,262)"/>
+  <use href="#av-hang" transform="translate(333,312)"/>
+  <use href="#av-hang" transform="translate(373,256)"/>
+  <use href="#av-hang" transform="translate(412,282)"/>
+</g>
+<rect class="av-pi" x="366" y="380" width="15" height="10" rx="2"/>
+
+<!-- entrada: barreira IR dupla -->
+<rect class="av-box" x="300" y="432" width="16" height="28"/>
+<rect class="av-box" x="420" y="432" width="8" height="28"/>
+<line class="av-ir" x1="316" y1="440" x2="420" y2="440"/>
+<line class="av-ir" x1="316" y1="453" x2="420" y2="453"/>
+<line class="av-groove" x1="430" y1="474" x2="440" y2="474"/>
+<line class="av-groove" x1="430" y1="486" x2="440" y2="486"/>
+<line class="av-groove" x1="430" y1="498" x2="440" y2="498"/>
+<line class="av-groove" x1="430" y1="510" x2="440" y2="510"/>
+
+<!-- difusor de essência -->
+<rect class="av-woodd" x="276" y="322" width="12" height="8" rx="1"/>
+<rect class="av-vial" x="272" y="330" width="20" height="34" rx="5"/>
+<path class="av-scent" d="M270 316 q-8 -10 0 -20 q8 -10 0 -20"/>
+<path class="av-scent" d="M284 312 q-8 -10 0 -20 q8 -10 0 -20"/>
+
+<!-- morcegos voando -->
+<g class="av-bat">
+  <use href="#av-fly" transform="translate(372,560) rotate(-14) scale(1.35)"/>
+  <use href="#av-fly" transform="translate(196,130) rotate(8) scale(.9)"/>
+</g>
+
+<!-- legendas (telas largas) -->
+<g class="av-labels">
+  <polyline class="av-lead" points="415,98 520,124 656,124"/><circle class="av-dot" cx="415" cy="98" r="2.5"/>
+  <text class="av-lbl" x="662" y="120">Antena LoRa</text>
+  <text class="av-sub" x="662" y="138">envia o resumo da noite</text>
+
+  <polyline class="av-lead" points="408,192 520,170 656,170"/><circle class="av-dot" cx="408" cy="192" r="2.5"/>
+  <text class="av-lbl" x="662" y="166">Compartimento vedado</text>
+  <text class="av-sub" x="662" y="184">Raspberry Pi Zero 2 W</text>
+
+  <polyline class="av-lead" points="384,214 520,244 656,244"/><circle class="av-dot" cx="384" cy="214" r="2.5"/>
+  <text class="av-lbl" x="662" y="240">Câmera NoIR</text>
+  <text class="av-sub" x="662" y="258">+ LEDs infravermelhos 940 nm</text>
+
+  <polyline class="av-lead" points="412,330 656,330"/><circle class="av-dot" cx="412" cy="330" r="2.5"/>
+  <text class="av-lbl" x="662" y="326">Frestas de cerca de 2 cm</text>
+  <text class="av-sub" x="662" y="344">formato ainda em teste</text>
+
+  <polyline class="av-lead" points="424,446 540,420 656,420"/><circle class="av-dot" cx="424" cy="446" r="2.5"/>
+  <text class="av-lbl" x="662" y="416">Barreira IR dupla</text>
+  <text class="av-sub" x="662" y="434">conta entradas e saídas</text>
+
+  <polyline class="av-lead" points="442,496 656,496"/><circle class="av-dot" cx="442" cy="496" r="2.5"/>
+  <text class="av-lbl" x="662" y="492">Tábua de pouso</text>
+  <text class="av-sub" x="662" y="510">ranhurada, para agarrar</text>
+
+  <polyline class="av-lead" points="518,557 656,552"/><circle class="av-dot" cx="518" cy="557" r="2.5"/>
+  <text class="av-lbl" x="662" y="548">Bateria separada</text>
+  <text class="av-sub" x="662" y="566">trocada toda semana</text>
+
+  <polyline class="av-lead" points="457,608 656,608"/><circle class="av-dot" cx="457" cy="608" r="2.5"/>
+  <text class="av-lbl" x="662" y="604">Poste de 3 a 5 m</text>
+  <text class="av-sub" x="662" y="622">longe de predadores</text>
+
+  <polyline class="av-lead" points="294,168 244,214"/><circle class="av-dot" cx="294" cy="168" r="2.5"/>
+  <text class="av-lbl" x="236" y="218" text-anchor="end">Telhado com beiral</text>
+  <text class="av-sub" x="236" y="236" text-anchor="end">protege da chuva e do sol</text>
+
+  <polyline class="av-lead" points="270,348 244,348"/><circle class="av-dot" cx="270" cy="348" r="2.5"/>
+  <text class="av-lbl" x="236" y="344" text-anchor="end">Difusor de essência</text>
+  <text class="av-sub" x="236" y="362" text-anchor="end">cheiro das plantas que eles comem</text>
+
+  <polyline class="av-lead" points="366,386 300,412 244,412"/><circle class="av-dot" cx="366" cy="386" r="2.5"/>
+  <text class="av-lbl" x="236" y="408" text-anchor="end">Sensor de temperatura</text>
+  <text class="av-sub" x="236" y="426" text-anchor="end">e umidade dentro do abrigo</text>
+</g>
+
+<!-- números (telas estreitas) -->
+<g class="av-num" aria-hidden="true">
+  <g transform="translate(276,150)"><circle r="14"/><text>1</text></g>
+  <g transform="translate(424,176)"><circle r="14"/><text>2</text></g>
+  <g transform="translate(330,232)"><circle r="14"/><text>3</text></g>
+  <g transform="translate(412,350)"><circle r="14"/><text>4</text></g>
+  <g transform="translate(252,348)"><circle r="14"/><text>5</text></g>
+  <g transform="translate(373,400)"><circle r="14"/><text>6</text></g>
+  <g transform="translate(368,474)"><circle r="14"/><text>7</text></g>
+  <g transform="translate(470,496)"><circle r="14"/><text>8</text></g>
+  <g transform="translate(540,557)"><circle r="14"/><text>9</text></g>
+  <g transform="translate(430,610)"><circle r="14"/><text>10</text></g>
+  <g transform="translate(384,86)"><circle r="14"/><text>11</text></g>
+</g>
+</svg>
+
+        </div>
+        <ol class="legend" aria-label="Legenda da ilustração">
+          <li>Telhado com beiral</li>
+          <li>Compartimento vedado com a Raspberry Pi Zero 2 W</li>
+          <li>Câmera NoIR e LEDs infravermelhos de 940 nm</li>
+          <li>Frestas de cerca de 2 cm (formato ainda em teste)</li>
+          <li>Difusor de essência vegetal</li>
+          <li>Sensor de temperatura e umidade</li>
+          <li>Barreira infravermelha dupla na entrada</li>
+          <li>Tábua de pouso ranhurada</li>
+          <li>Bateria numa caixa separada, trocada toda semana</li>
+          <li>Poste de 3 a 5 m</li>
+          <li>Antena LoRa, que envia o resumo da noite pelo rádio</li>
+        </ol>
+        <figcaption class="figcap">O abrigo visto em corte. Os morcegos ficam nas frestas; a eletrônica fica num compartimento vedado e a bateria fica fora da casinha.</figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<section class="band" id="morcegos" aria-labelledby="h-morcegos">
+  <div class="wrap row">
+    <div class="rail"><time>18:40</time><small>a saída</small></div>
+    <div class="body">
+      <h2 id="h-morcegos">Quem sai para trabalhar quando escurece</h2>
+      <p>Na Mata de Santa Genebra e arredores vivem 18 espécies de morcegos <span class="todo">[fonte do levantamento]</span>. Duas formas de se alimentar interessam a este projeto.</p>
+      <dl class="guilds">
+        <div><dt>Frugívoros<span>foco do projeto</span></dt><dd>Comem frutos e espalham as sementes enquanto voam. Ajudam a mata a se replantar sozinha.</dd></div>
+        <div><dt>Nectarívoros<span>foco do projeto</span></dt><dd>Bebem o néctar das flores e levam pólen de uma planta para outra. Polinizam, como as abelhas.</dd></div>
+        <div class="off"><dt>Insetívoros<span>fora do foco</span></dt><dd>Comem insetos e se adaptam bem à cidade. São importantes, mas não são o alvo deste abrigo.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="problema" aria-labelledby="h-problema">
+  <div class="wrap row">
+    <div class="rail"><time>21:00</time><small>em busca de comida</small></div>
+    <div class="body">
+      <h2 id="h-problema">Menos mata, menos lugar para comer e dormir</h2>
+      <p>Em Campinas, incluindo a região de Sousas, o desmatamento e a expansão urbana estão reduzindo as áreas onde esses morcegos se alimentam e se abrigam.</p>
+      <p>Sem eles, a mata perde quem espalha sementes e quem poliniza flores. A recuperação de áreas desmatadas ou queimadas fica mais lenta.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="pergunta" aria-labelledby="h-pergunta">
+  <div class="wrap row">
+    <div class="rail"><time>23:00</time><small>a pergunta</small></div>
+    <div class="body">
+      <h2 id="h-pergunta">Juntar abrigo, cheiro e medição</h2>
+      <p>Casinhas para morcegos já existem, mas não têm nenhum atrativo. Nos Estados Unidos, um pesquisador usou essências de plantas para atrair morcegos <span class="todo">[fonte do estudo]</span>. A proposta é unir as duas ideias e medir se funciona.</p>
+      <ul class="trio">
+        <li><strong>Abrigo</strong><p>Um lugar escuro e protegido, instalado em áreas em recuperação.</p></li>
+        <li><strong>Atrativo</strong><p>Um difusor com a essência de plantas da própria mata que esses morcegos procuram.</p></li>
+        <li><strong>Medição</strong><p>Sensores e câmera que registram cada entrada e saída.</p></li>
+      </ul>
+      <div class="question">
+        <h3>A grande pergunta: qual abrigo eles aceitam?</h3>
+        <p>Frugívoros e nectarívoros costumam dormir em folhagem, ocos de árvore e cavernas, e raramente usam as caixas comuns de frestas estreitas. Por isso o formato do abrigo é o primeiro experimento.</p>
+        <p>Com os morcególogos, vamos escolher dois ou três formatos, por exemplo uma caixa mais larga parecida com um oco de árvore, e comparar quais são ocupados.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="contagem" aria-labelledby="h-contagem">
+  <div class="wrap row">
+    <div class="rail"><time>00:00</time><small>meia-noite</small></div>
+    <div class="body">
+      <h2 id="h-contagem">Como o abrigo conta os morcegos</h2>
+      <ol class="steps">
+        <li><div><strong>O morcego passa pela entrada</strong><p>Ele pousa na tábua e sobe pela abertura de baixo, cortando dois feixes de luz infravermelha, invisível para nós.</p></div></li>
+        <li><div><strong>A ordem dos feixes diz a direção</strong><p>Se o feixe de fora é cortado antes do de dentro, foi uma entrada. Se for o contrário, foi uma saída.</p></div></li>
+        <li><div><strong>A câmera registra</strong><p>LEDs de <span class="term">940 nm</span>, um infravermelho que os morcegos praticamente não enxergam, acendem por alguns segundos. A câmera <span class="term">NoIR</span>, que não tem filtro de infravermelho, fotografa a fresta central.</p></div></li>
+        <li><div><strong>Tudo vira dado</strong><p>Data, hora, direção, temperatura e umidade vão para um arquivo no cartão de memória, junto com as fotos.</p></div></li>
+        <li><div><strong>Um resumo vai pelo rádio</strong><p>A cada 30 minutos, um rádio <span class="term">LoRa</span> envia uma mensagem curta: entradas, saídas, temperatura, umidade e carga da bateria. Um receptor num ponto com internet, como a sede da mata ou a escola, recebe a mensagem e mostra os números para a equipe no mesmo dia.</p></div></li>
+        <li><div><strong>A equipe confere</strong><p>As fotos são pesadas demais para o rádio. Elas ficam no cartão de memória, são buscadas nas visitas e servem para conferir as contagens da barreira.</p></div></li>
+      </ol>
+      <div class="tbl" role="region" aria-labelledby="cap-pecas" tabindex="0">
+        <table>
+          <caption id="cap-pecas">Peças do protótipo</caption>
+          <thead><tr><th scope="col">Peça</th><th scope="col">Para que serve</th><th scope="col">Detalhe</th></tr></thead>
+          <tbody>
+            <tr><td class="part">Raspberry Pi Zero 2 W</td><td>Lê os sensores, controla a câmera e grava os dados</td><td>Computador pequeno e barato; consome de 0,5 a 1 W. O Wi-Fi fica desligado para economizar</td></tr>
+            <tr><td class="part">Camera Module 3 NoIR</td><td>Fotografa no escuro</td><td>Sem filtro de infravermelho</td></tr>
+            <tr><td class="part">LEDs infravermelhos</td><td>Iluminam o interior</td><td><span class="num">940 nm</span>, só durante a foto</td></tr>
+            <tr><td class="part">Barreira IR dupla</td><td>Detecta passagem e direção</td><td>Dois pares de emissor e receptor</td></tr>
+            <tr><td class="part">Sensor BME280</td><td>Mede temperatura e umidade</td><td>Fica dentro do abrigo</td></tr>
+            <tr><td class="part">Módulo LoRa RFM95W</td><td>Envia o resumo pelo rádio</td><td>Faixa de <span class="num">915 MHz</span>, de uso livre no Brasil. Alcance estimado de 1 a 2 km dentro da mata</td></tr>
+            <tr><td class="part">Receptor LoRa</td><td>Recebe as mensagens</td><td>Fica num ponto com internet, como a sede da mata ou a escola</td></tr>
+            <tr><td class="part">Sensor INA219</td><td>Mede tensão e corrente da bateria</td><td>Mostra a carga e o consumo real</td></tr>
+            <tr><td class="part">Duas baterias LiFePO4</td><td>Mantêm tudo ligado na mata</td><td><span class="num">12,8 V</span> e <span class="num">20 Ah</span> cada, com conversor para 5 V. Uma fica no abrigo enquanto a outra carrega na escola</td></tr>
+            <tr><td class="part">Difusor de essência</td><td>Atrai os morcegos</td><td>Essência a definir com os morcególogos</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="question">
+        <h3>Por que LoRa, e não Wi-Fi ou celular?</h3>
+        <p>Não há Wi-Fi no meio da mata, e um chip de celular custa todo mês e gasta mais bateria. O LoRa foi feito para mandar mensagens pequenas para longe gastando muito pouca energia: cada mensagem leva menos de meio segundo no ar.</p>
+        <p>Assim a equipe sabe toda manhã quantos morcegos entraram e saíram, e recebe um aviso se a bateria ficar abaixo de 30%, sem precisar ir até o abrigo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="energia" aria-labelledby="h-energia">
+  <div class="wrap row">
+    <div class="rail"><time>02:00</time><small>longe da tomada</small></div>
+    <div class="body">
+      <h2 id="h-energia">Uma semana com uma bateria só</h2>
+      <p>Debaixo da mata fechada quase não chega sol, então um painel solar não daria conta. A bateria precisa manter o abrigo funcionando por 7 dias sem nenhuma recarga. Depois disso, a equipe troca por outra carregada. A conta começa pela potência de cada peça e pelo tempo que ela fica ligada por dia.</p>
+      <div class="tbl" role="region" aria-labelledby="cap-energia" tabindex="0">
+        <table>
+          <caption id="cap-energia">Consumo estimado em um dia</caption>
+          <thead><tr><th scope="col">Peça</th><th scope="col">Potência</th><th scope="col">Ligada por dia</th><th scope="col">Energia</th></tr></thead>
+          <tbody>
+            <tr><td class="part">Raspberry Pi Zero 2 W</td><td class="num">0,6 W</td><td>24 h</td><td class="num">14,4 Wh</td></tr>
+            <tr><td class="part">Barreira IR dupla</td><td class="num">0,2 W</td><td>24 h</td><td class="num">4,8 Wh</td></tr>
+            <tr><td class="part">Câmera NoIR</td><td class="num">1,25 W</td><td>5 min (60 fotos de 5 s)</td><td class="num">0,10 Wh</td></tr>
+            <tr><td class="part">LEDs infravermelhos</td><td class="num">1 W</td><td>5 min, só nas fotos</td><td class="num">0,08 Wh</td></tr>
+            <tr><td class="part">Sensores BME280 e INA219</td><td class="num">0,005 W</td><td>24 h</td><td class="num">0,12 Wh</td></tr>
+            <tr><td class="part">Rádio LoRa transmitindo</td><td class="num">0,4 W</td><td>15 s (48 mensagens)</td><td class="num">0,002 Wh</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td colspan="3">Soma das peças</td><td class="num">19,5 Wh</td></tr>
+            <tr><td colspan="3">Com as perdas do conversor de 12 V para 5 V (85% de eficiência)</td><td class="num">23 Wh</td></tr>
+          </tfoot>
+        </table>
+      </div>
+      <div>
+        <div class="share" role="img" aria-label="Divisão do consumo diário: Raspberry Pi 74%, barreira infravermelha 25%, todo o resto 1%."><i class="s-pi" style="width:74%"></i><i class="s-ir" style="width:25%"></i><i class="s-rest" style="width:1%"></i></div>
+        <ul class="share-key" aria-hidden="true">
+          <li style="--k:var(--chip)">Raspberry Pi <b>74%</b></li>
+          <li style="--k:var(--ir)">Barreira IR <b>25%</b></li>
+          <li style="--k:var(--muted)">Câmera, LEDs, sensores e LoRa <b>1%</b></li>
+        </ul>
+      </div>
+      <p>A câmera, os LEDs e o rádio quase não pesam, porque ficam ligados poucos minutos por dia. Quem gasta é o que fica ligado o tempo todo.</p>
+      <ol class="calc">
+        <li><span>Energia por dia</span><code>19,5 Wh ÷ 0,85 = <b>23 Wh</b></code></li>
+        <li><span>Energia para 7 dias</span><code>23 Wh × 7 = <b>161 Wh</b></code></li>
+        <li><span>Margem: usar no máximo 80% da bateria, para ela durar mais anos</span><code>161 Wh ÷ 0,8 = <b>201 Wh</b></code></li>
+        <li><span>Capacidade numa bateria de 12,8 V</span><code>201 Wh ÷ 12,8 V = <b>15,7 Ah</b></code></li>
+      </ol>
+      <div class="result">
+        <h3>A bateria escolhida: LiFePO4 de 12,8 V e 20 Ah</h3>
+        <p class="big">9 dias<small>sem carregar</small></p>
+        <p class="muted">Ela guarda 256 Wh. Usando 80% disso, são 205 Wh, que dão quase 9 dias a 23 Wh por dia: dois dias de folga se a troca atrasar. A química LiFePO4 é a mais segura entre as baterias de lítio, aguenta melhor o calor e dura milhares de recargas. Uma bateria de chumbo-ácido só pode usar metade da carga, então precisaria de cerca de 27 Ah e seria umas três vezes mais pesada para carregar pela trilha toda semana.</p>
+      </div>
+      <div class="care">
+        <div><h3>A troca semanal</h3><p>Com duas baterias, uma fica no abrigo e a outra carrega na escola, o que leva algumas horas num carregador de LiFePO4. O rádio LoRa avisa quando a carga cai abaixo de 30%, cerca de dois dias antes de acabar.</p></div>
+        <div><h3>Se precisar economizar</h3><p>Desligar a Raspberry e a barreira de dia, das 7h às 17h, quando os morcegos estão dormindo, corta o consumo em cerca de 40%. Aí a mesma bateria duraria uns 15 dias, e a troca passaria a ser a cada duas semanas. Para isso é preciso um relógio que religue a placa no fim da tarde.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band ir" id="noite" aria-labelledby="h-noite">
+  <div class="wrap row">
+    <div class="rail"><time>04:50</time><small>a volta</small></div>
+    <div class="body">
+      <span class="sample">Exemplo com números inventados</span>
+      <h2 id="h-noite">Uma noite no abrigo</h2>
+      <p class="muted">É assim que os dados de uma noite devem aparecer, vistos pelo infravermelho.</p>
+      <p class="tally" aria-label="4 morcegos dentro ao anoitecer, 14 saídas, 15 entradas, 5 dentro ao amanhecer">
+        <span><b>4</b>dentro às 18h</span><span class="op" aria-hidden="true">−</span>
+        <span><b>14</b>saídas</span><span class="op" aria-hidden="true">+</span>
+        <span><b>15</b>entradas</span><span class="op" aria-hidden="true">=</span>
+        <span><b>5</b>dentro às 6h</span>
+      </p>
+      <div class="chart" role="img" aria-label="Passagens pela entrada por hora, das 18h às 6h, exemplo: 6 às 18h e 5 às 19h na saída para comer; de 0 a 2 por hora de madrugada; 4 às 4h e 4 às 5h na volta antes do amanhecer.">
+        <div class="notes" aria-hidden="true"><span>saída ao anoitecer</span><span>volta antes do amanhecer</span></div>
+        <div class="bars" aria-hidden="true">
+          <div class="bar"><b>6</b><i style="height:100%"></i></div>
+          <div class="bar"><b>5</b><i style="height:83%"></i></div>
+          <div class="bar low"><b>2</b><i style="height:33%"></i></div>
+          <div class="bar low"><b>1</b><i style="height:17%"></i></div>
+          <div class="bar low"><b>1</b><i style="height:17%"></i></div>
+          <div class="bar low"><b>2</b><i style="height:33%"></i></div>
+          <div class="bar low"><b>0</b><i style="height:0"></i></div>
+          <div class="bar low"><b>1</b><i style="height:17%"></i></div>
+          <div class="bar low"><b>1</b><i style="height:17%"></i></div>
+          <div class="bar low"><b>2</b><i style="height:33%"></i></div>
+          <div class="bar"><b>4</b><i style="height:67%"></i></div>
+          <div class="bar"><b>4</b><i style="height:67%"></i></div>
+        </div>
+        <div class="hours" aria-hidden="true"><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+      </div>
+      <div class="tbl" role="region" aria-labelledby="cap-log" tabindex="0">
+        <table>
+          <caption id="cap-log">Trecho do registro da noite (exemplo)</caption>
+          <thead><tr><th scope="col">Hora</th><th scope="col">Evento</th><th scope="col">Temp.</th><th scope="col">Umidade</th><th scope="col">Foto</th></tr></thead>
+          <tbody>
+            <tr><td class="num">18:47:12</td><td><span class="dir out">saída</span></td><td class="num">25,1 °C</td><td class="num">71%</td><td class="num">img_0412.jpg</td></tr>
+            <tr><td class="num">18:49:03</td><td><span class="dir out">saída</span></td><td class="num">25,0 °C</td><td class="num">71%</td><td class="num">img_0413.jpg</td></tr>
+            <tr><td class="num">23:15:40</td><td><span class="dir in">entrada</span></td><td class="num">22,8 °C</td><td class="num">80%</td><td class="num">img_0420.jpg</td></tr>
+            <tr><td class="num">04:52:21</td><td><span class="dir in">entrada</span></td><td class="num">20,9 °C</td><td class="num">86%</td><td class="num">img_0431.jpg</td></tr>
+            <tr><td class="num">05:06:58</td><td><span class="dir in">entrada</span></td><td class="num">20,7 °C</td><td class="num">87%</td><td class="num">img_0432.jpg</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="limites" aria-labelledby="h-limites">
+  <div class="wrap row">
+    <div class="rail"><time>05:30</time><small>antes do sol</small></div>
+    <div class="body">
+      <h2 id="h-limites">Limites e decisões em aberto</h2>
+      <div class="care">
+        <div><h3>Qual essência usar</h3><p>Escolher plantas da própria mata que essas espécies procuram e testar como manter o cheiro por semanas.</p></div>
+        <div><h3>Dois morcegos juntos</h3><p>Se dois passam ao mesmo tempo, a barreira pode contar só um. As fotos servem para corrigir a contagem.</p></div>
+        <div><h3>Calor e luz</h3><p>A bateria fica numa caixa separada, a eletrônica fica vedada e os LEDs só acendem durante a foto.</p></div>
+        <div><h3>A câmera vê só uma fresta</h3><p>As fotos são uma amostra do interior. Quem conta todas as passagens é a barreira.</p></div>
+        <div><h3>Autorização</h3><p>A Mata de Santa Genebra é uma área protegida. A instalação pode exigir autorização do órgão gestor e do SISBIO (ICMBio).</p></div>
+        <div><h3>O rádio não manda fotos</h3><p>Cada mensagem LoRa tem poucas dezenas de bytes. As fotos continuam no cartão de memória e são buscadas nas visitas.</p></div>
+        <div><h3>Consumo ainda estimado</h3><p>A conta de energia usa números de fichas técnicas. O alcance do rádio dentro da mata também precisa ser testado no local.</p></div>
+        <div><h3>Segurança</h3><p>Ninguém toca nos morcegos. Todo o monitoramento é feito por sensores e imagens.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="proximos" aria-labelledby="h-proximos">
+  <div class="wrap row">
+    <div class="rail"><time>06:00</time><small>amanhecer</small></div>
+    <div class="body">
+      <h2 id="h-proximos">Próximos passos</h2>
+      <ol class="next">
+        <li><div><strong>Definir formato e essência</strong><p>Com os morcególogos, escolher os formatos de abrigo e as plantas para a essência.</p></div></li>
+        <li><div><strong>Montar o protótipo</strong><p>Testar a barreira, a câmera e a bateria em bancada antes de ir para a mata, medindo o consumo real com o INA219 e o alcance do rádio LoRa.</p></div></li>
+        <li><div><strong>Pedir as autorizações</strong><p>Falar com o gestor da Mata de Santa Genebra e verificar a necessidade de licença no SISBIO.</p></div></li>
+        <li><div><strong>Instalar e coletar</strong><p>Instalar os primeiros abrigos e coletar dados por <span class="todo">[período]</span>.</p></div></li>
+        <li><div><strong>Comparar e divulgar</strong><p>Comparar os formatos e as noites com e sem essência, e compartilhar os resultados.</p></div></li>
+      </ol>
+      <div class="ask">
+        <div>
+          <h3>Quem pode ajudar</h3>
+          <p class="muted">Procuramos morcególogos para orientar o formato do abrigo e a escolha da essência, e apoio para comprar as peças do protótipo.</p>
+          <dl class="who">
+            <div><dt>Equipe</dt><dd><span class="todo">[nomes]</span></dd></div>
+            <div><dt>Escola</dt><dd><span class="todo">[escola ou instituição]</span></dd></div>
+            <div><dt>Contato</dt><dd><span class="todo">[e-mail]</span></dd></div>
+          </dl>
+        </div>
+        <div>
+          <h3>Referências</h3>
+          <ol class="refs">
+            <li><span class="todo">[levantamento das 18 espécies de morcegos da Mata de Santa Genebra]</span></li>
+            <li><span class="todo">[estudo dos EUA sobre essências de plantas que atraem morcegos]</span></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Abrigo Vivo · Campinas, SP · 2026</span>
+    <span>Projeto em desenvolvimento</span>
+  </div>
+</footer>
+
+<script>try{document.documentElement.lang='pt-BR'}catch(e){}</script>

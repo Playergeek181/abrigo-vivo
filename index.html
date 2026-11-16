@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Abrigo Vivo</title>
+<meta name="description" content="Abrigo inteligente para morcegos frugívoros e nectarívoros perto da Mata de Santa Genebra, em Campinas. Projeto de Inovação da FIRST LEGO League 2026.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<meta property="og:title" content="Abrigo Vivo">
+<meta property="og:description" content="Um abrigo com o cheiro das plantas que os morcegos comem, que conta quem entra e sai e avisa a equipe por rádio LoRa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@600&display=swap">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#0b1513; --surface:#13201d; --ink:#e7ece4; --muted:#a9b5ad; --line:#33443f;
+  --dusk:#2a2b4d; --dawn:#4b3443; --accent:#e597bd; --ir:#ff5a4a; --moon:#efe9cf;
+  --f-display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --f-body:'Atkinson Hyperlegible',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;background-color:var(--bg);
+  background-image:linear-gradient(180deg,var(--dusk) 0%,var(--bg) 45%,var(--bg) 80%,var(--dawn) 100%);
+  color:var(--ink);font:400 17px/1.6 var(--f-body)}
+a{color:var(--accent);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{width:100%;max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{padding-block:72px 40px}
+.brand{display:flex;align-items:center;gap:20px}
+.brand img{width:88px;height:88px;flex:none}
+h1{font:800 clamp(48px,9vw,84px)/1 var(--f-display);letter-spacing:-.035em;margin:0}
+.lead{font-size:clamp(20px,2.4vw,24px);line-height:1.45;max-width:36ch;margin:28px 0 0}
+.where{color:var(--muted);margin:12px 0 0}
+.go{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding-block:8px 48px}
+.go a{display:flex;flex-direction:column;gap:8px;padding:26px;border:1px solid var(--line);border-radius:18px;background:var(--surface);color:var(--ink);text-decoration:none;transition:border-color .2s,transform .2s}
+.go a:hover{border-color:var(--accent);transform:translateY(-2px)}
+.go a:nth-child(2):hover{border-color:var(--ir)}
+.go strong{font:700 26px/1.15 var(--f-display)}
+.go span{color:var(--muted);font-size:16px}
+.go em{font:600 13px var(--f-mono);font-style:normal;color:var(--accent);margin-top:auto;padding-top:10px}
+.go a:nth-child(2) em{color:var(--ir)}
+.facts{list-style:none;margin:0;padding:24px 0 56px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;border-top:1px solid var(--line)}
+.facts b{display:block;font:700 30px/1.1 var(--f-display);color:var(--moon);font-variant-numeric:tabular-nums}
+.facts span{color:var(--muted);font-size:15px}
+footer{margin-top:auto;padding-block:28px;font-size:14px;color:var(--muted);border-top:1px solid var(--line)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+@media (max-width:720px){
+  header{padding-block:48px 28px}
+  .brand img{width:64px;height:64px}
+  .go{grid-template-columns:minmax(0,1fr)}
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:reduce){.go a{transition:none}.go a:hover{transform:none}}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <div class="brand">
+    <img src="assets/logo.svg" alt="" width="88" height="88">
+    <h1>Abrigo Vivo</h1>
+  </div>
+  <p class="lead">Um abrigo com o cheiro das plantas que os morcegos comem consegue trazê-los de volta para a mata em recuperação?</p>
+  <p class="where">Projeto de Inovação da FIRST LEGO League 2026 · Mata de Santa Genebra, Campinas (SP)</p>
+</header>
+
+<main class="wrap">
+  <nav class="go" aria-label="Páginas do projeto">
+    <a href="site/abrigo-vivo.html">
+      <strong>Conheça o projeto</strong>
+      <span>O problema, os morcegos, a pergunta, como o abrigo conta quem entra e sai, a conta de energia e os próximos passos.</span>
+      <em>Abrir o site →</em>
+    </a>
+    <a href="3d/">
+      <strong>Veja o abrigo em 3D</strong>
+      <span>Uma noite inteira animada: os morcegos saem e voltam, a barreira infravermelha conta, a câmera fotografa e o rádio LoRa avisa a equipe.</span>
+      <em>Abrir a animação →</em>
+    </a>
+  </nav>
+
+  <ul class="facts" aria-label="Números do protótipo">
+    <li><b>18</b><span>espécies de morcegos na região</span></li>
+    <li><b>2</b><span>feixes infravermelhos contam entradas e saídas</span></li>
+    <li><b>LoRa</b><span>rádio que envia o resumo a cada 30 minutos</span></li>
+    <li><b>~9 dias</b><span>de bateria, trocada toda semana</span></li>
+  </ul>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Abrigo Vivo · Campinas, SP · 2026</span>
+    <span>Projeto em desenvolvimento</span>
+  </div>
+</footer>
+</body>
+</html>
